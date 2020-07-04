@@ -1,0 +1,34 @@
+.container {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgb(150,150,150, 0.6);
+}
+
+.textColor {
+    color: rgb(236, 23, 77);
+}
+
+.textColor:hover {
+    color: rgb(236, 23, 77);
+}
+
+.headingContainer {
+    display: flex;
+    flex: 1;
+    margin: 1rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.headingContainer > span, .language {
+    font-size: 1.1rem;
+    color: rgb(147,147,147);
+}
+
+.headingContainer > h2 {
+    font-weight: 300;
+    margin:0;
+}
+
+.language{
+    font-size: 1rem;
+}

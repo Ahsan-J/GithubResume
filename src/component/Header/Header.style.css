@@ -1,0 +1,15 @@
+.appBanner {
+    width: 8%;
+    display: block;
+    margin: 20px auto;
+    align-self: center;
+}
+
+.appBanner:hover {
+    cursor: pointer;
+}
+
+.header {
+    padding:0.2rem;
+    background-color: #ffffff;
+}

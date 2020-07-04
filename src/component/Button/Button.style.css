@@ -1,0 +1,24 @@
+.button {
+    background-color: rgb(236, 23, 77);
+    border-radius: 50px 50px;
+    color: #ffffff;
+    font-weight: 700;
+    border-width: 0;
+    padding: 0.7rem 4.5rem;
+    text-align: center;
+    margin: 1rem;
+    box-shadow: 0 2px 10px 1px #888888;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    box-shadow: 0 1px 10px 1px #888888;
+    transform: translateY(4px);
+}
