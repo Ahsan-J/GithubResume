@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import detector from "i18next-browser-languagedetector";
 import backend from "i18next-http-backend";
+const packageJSON = require('../../package.json')
 
 // the translations
 // (tip move them in a JSON file and import them)
@@ -37,8 +38,8 @@ i18n
             },
         },
         backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json',
-            addPath: '/locales/add/{{lng}}/{{ns}}.missing.json',
+            loadPath: `${process.env.NODE_ENV == "production" ? packageJSON.homepage.trim() : "" }/locales/{{lng}}/{{ns}}.json`,
+            addPath: `${process.env.NODE_ENV == "production" ? packageJSON.homepage.trim() : "" }/locales/add/{{lng}}/{{ns}}.missing.json`,
         },
         initImmediate: false,
         lng: "en",

@@ -3,7 +3,8 @@ import styles from './LoginInput.style.css';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import { useTranslation } from '../../helper/hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { extendSearchParams } from '../../helper/utility';
 
 interface propType {
     className?: string;
@@ -14,11 +15,12 @@ const LoginInput: React.FC<propType> =  React.memo((props: React.PropsWithChildr
     const {t} = useTranslation();
     const [username, setUsername] = useState<string>('');
     const history = useHistory();
+    const location = useLocation();
 
     const generateGitResume = () => {
         if(username.length >= 3) {
             // return props.setGitUser? props.setGitUser(username) : '';
-            return history.push(`/?name=${username}`);
+            return history.push(location.pathname + extendSearchParams({name: username}));
         }
     };
 
