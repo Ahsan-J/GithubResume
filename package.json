@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.tsx",
-  "homepage": "http://ahsan-j.github.io/GithubResume",
+  "homepage": "https://ahsan-j.github.io/GithubResume",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
