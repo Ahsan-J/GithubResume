@@ -25,6 +25,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm i
-    - run: npm run deploy
+    - run: |
+        git config user.name "Ahsan-J" && git config user.email "ahsan.ahmed99@ymail.com"
+        npm run deploy
       env:
         GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
