@@ -4,6 +4,8 @@ import App from './App';
 import './core-features/i18n';
 
 ReactDOM.render(
-    <App />, 
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
     document.getElementById("root")
 );
