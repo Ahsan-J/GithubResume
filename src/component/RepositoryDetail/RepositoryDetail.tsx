@@ -9,7 +9,7 @@ interface propType {
     repository: any
 }
 
-const RepositoryDetail: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const RepositoryDetail: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     const { t } = useTranslation();
     
     return (

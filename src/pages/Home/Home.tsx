@@ -10,7 +10,7 @@ interface propType {
 
 }
 
-const Home: React.SFC<propType> =  React.memo(() => {
+const Home: React.FC<propType> =  React.memo(() => {
     const { t } = useTranslation();
     const [gitUser, setGitUser] = useState<string>('')
 

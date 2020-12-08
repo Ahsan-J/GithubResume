@@ -6,7 +6,7 @@ interface propType {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-const Button: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const Button: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     
     return (
         <button onClick={props.onClick} className={`${styles.button} ${props.className}`}>

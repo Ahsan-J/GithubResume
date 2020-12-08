@@ -6,14 +6,14 @@ import { useTranslation } from '../../helper/hooks';
 import moment from 'moment';
 import LanguageBar from '../LanguageBar/LanguageBar';
 import RepositoryDetail from '../RepositoryDetail/RepositoryDetail';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 interface propType {
     className?: string;
     gitUser?: string;
 }
 
-const Resume: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     
     const query = useSearchQuery();
     const location = useLocation();

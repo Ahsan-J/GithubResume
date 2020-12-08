@@ -3,14 +3,14 @@ import styles from './LoginInput.style.css';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import { useTranslation } from '../../helper/hooks';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 interface propType {
     className?: string;
     setGitUser?: (gitUser: string) => void
 }
 
-const LoginInput: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const LoginInput: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     const {t} = useTranslation();
     const [username, setUsername] = useState<string>('');
     const history = useHistory();

@@ -6,7 +6,7 @@ interface propType {
     className?: string;
 }
 
-const Header: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const Header: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     
     const onImgClick = () => {
         window.open('https://www.exozet.com/','_blank');

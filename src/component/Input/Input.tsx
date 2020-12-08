@@ -10,7 +10,7 @@ interface propType {
     onKeyDown? : (event: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-const Input: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const Input: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     
     return (
         <input

@@ -7,7 +7,7 @@ interface propType {
     language: any;
 }
 
-const LanguageBar: React.SFC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const LanguageBar: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
     const ratio = (props.language?.count || 1) / props.totalCount
     return (
         <div className={`${styles.container} ${props.className}`}>
