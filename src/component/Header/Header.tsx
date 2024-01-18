@@ -9,7 +9,7 @@ type propType  = {
     style?: React.CSSProperties;
 }
 
-const Header=  React.memo<propType>((props) => {
+const Header = React.memo<propType>((props) => {
 
     return (
         <header className={`${styles.header} ${props.className}`}>

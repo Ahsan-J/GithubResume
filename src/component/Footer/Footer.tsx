@@ -2,11 +2,13 @@ import React from 'react';
 import styles from './Footer.style.css';
 import moment from 'moment';
 
-interface propType {
+type propType = {
+    id?: string;
+    style?: React.CSSProperties;
     className?: string;
 }
 
-const Footer: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const Footer =  React.memo<propType>((props) => {
     
     return (
         <footer className={`${styles.footer} ${props.className}`}>
@@ -14,10 +16,5 @@ const Footer: React.FC<propType> =  React.memo((props: React.PropsWithChildren<p
         </footer>
     )
 });
-
-Footer.defaultProps = {
-    className: "",
-};
-
 
 export default Footer;

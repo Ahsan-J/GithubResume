@@ -5,11 +5,13 @@ import { useTranslation } from '../../helper/hooks';
 import { RepositoryPermission } from '../../helper/enums';
 
 interface propType {
+    id?: string;
+    style?: React.CSSProperties;
     className?: string;
     repository: any
 }
 
-const RepositoryDetail: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const RepositoryDetail =  React.memo<propType>((props) => {
     const { t } = useTranslation();
     
     return (
@@ -30,10 +32,5 @@ const RepositoryDetail: React.FC<propType> =  React.memo((props: React.PropsWith
         </div>
     )
 });
-
-RepositoryDetail.defaultProps = {
-    className: "",
-};
-
 
 export default RepositoryDetail;
