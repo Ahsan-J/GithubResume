@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './LanguageBar.style.css';
 
-interface propType {
+type propType = {
+    id?: string;
+    style?: React.CSSProperties;
     className?: string;
     totalCount: number;
     language: any;
 }
 
-const LanguageBar: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
+const LanguageBar =  React.memo<propType>((props) => {
     const ratio = (props.language?.count || 1) / props.totalCount
     return (
         <div className={`${styles.container} ${props.className}`}>
@@ -25,10 +27,5 @@ const LanguageBar: React.FC<propType> =  React.memo((props: React.PropsWithChild
         </div>
     )
 });
-
-LanguageBar.defaultProps = {
-    className: "",
-};
-
 
 export default LanguageBar;

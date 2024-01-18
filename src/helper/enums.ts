@@ -1,8 +1,5 @@
-interface enumType {
-    [id: string]: string;
-}
 
-export const RepositoryPermission: enumType = {
+export const RepositoryPermission = {
     ADMIN: 'Public can read, clone, and push to this repository',
     MAINTAIN: 'Public can read, clone, and push to this repository',
     READ: 'Public can read and clone this repository.',

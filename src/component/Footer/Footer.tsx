@@ -10,7 +10,7 @@ const Footer: React.FC<propType> =  React.memo((props: React.PropsWithChildren<p
     
     return (
         <footer className={`${styles.footer} ${props.className}`}>
-            &copy; Github {moment().format("YYYY")}
+            &copy; <a href='https://github.com/Ahsan-J' target='__blank'>Ahsan-J</a> {moment().format("YYYY")}
         </footer>
     )
 });

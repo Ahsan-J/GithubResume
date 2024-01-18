@@ -1,5 +1,5 @@
+import { toTitleCase } from 'forging-react/lib/helpers/utility';
 import { useTranslation as usei18nTranslation} from 'react-i18next'
-import { toTitleCase } from './utility';
 
 export const useTranslation = () => {
     const { t } = usei18nTranslation();

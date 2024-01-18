@@ -1,12 +1,7 @@
-.appBanner {
-    width: 8%;
-    display: block;
-    margin: 20px auto;
-    align-self: center;
-}
-
-.appBanner:hover {
-    cursor: pointer;
+.linkWrapper {
+    width: 10rem !important;
+    margin: 20px auto !important;
+    padding: 0 !important;
 }
 
 .header {

@@ -6,11 +6,7 @@ import Header from '../../component/Header/Header';
 import Footer from '../../component/Footer/Footer';
 import styles from './Home.style.css';
 
-interface propType {
-
-}
-
-const Home: React.FC<propType> =  React.memo(() => {
+const Home = React.memo(() => {
     const { t } = useTranslation();
     const [gitUser, setGitUser] = useState<string>('')
 
@@ -28,10 +24,5 @@ const Home: React.FC<propType> =  React.memo(() => {
         </React.Fragment>
     )
 });
-
-Home.defaultProps = {
-    className: "",
-};
-
 
 export default Home;

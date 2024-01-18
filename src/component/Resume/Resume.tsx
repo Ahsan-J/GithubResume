@@ -6,7 +6,8 @@ import { useTranslation } from '../../helper/hooks';
 import moment from 'moment';
 import LanguageBar from '../LanguageBar/LanguageBar';
 import RepositoryDetail from '../RepositoryDetail/RepositoryDetail';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { ObjectType } from 'forging-react';
 
 interface propType {
     className?: string;
@@ -14,25 +15,23 @@ interface propType {
 }
 
 const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
-    
-    const query = useSearchQuery();
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
 
     const [loadUserDetail, { called, loading, data }] = useLazyQuery(
         GET_GIT_USER_DETAIL,
-        { variables: { username: query.get("name") || props.gitUser } }
+        { variables: { username: searchParams.get("name") || props.gitUser } }
     );
 
     useEffect(() => {
-        const username = query.get("name") || props.gitUser;
+        const username = searchParams.get("name") || props.gitUser;
         if (username) {
             loadUserDetail();
         }
-    }, [props.gitUser, location.search]);
+    }, [loadUserDetail, props.gitUser, searchParams]);
 
     const {t} = useTranslation();
 
-    if (!(query.get("name") || props.gitUser)) {
+    if (!(searchParams.get("name") || props.gitUser)) {
         return null;
     }
 
@@ -50,7 +49,7 @@ const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<p
         )
     }
 
-    const languages = user.repositories.nodes.reduce((result: any, repository: any) => {
+    const languages = user.repositories.nodes.reduce<ObjectType>((result, repository) => {
         if(repository.primaryLanguage) {
             result[repository.primaryLanguage.id] = {
                 ...(result[repository.primaryLanguage.id] || repository.primaryLanguage),
@@ -113,13 +112,5 @@ const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<p
         </div>
     )
 });
-
-Resume.defaultProps = {
-    className: '',
-}
-
-const useSearchQuery = () => {
-    return new URLSearchParams(useLocation().search)
-}
 
 export default Resume;

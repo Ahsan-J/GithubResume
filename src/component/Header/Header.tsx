@@ -1,26 +1,23 @@
 import React from 'react';
 import styles from './Header.style.css';
 import logo from '../../../assets/ba9a7cbd.jpg';
+import { Button, Image } from 'forging-react';
 
-interface propType {
+type propType  = {
     className?: string;
+    id?: string;
+    style?: React.CSSProperties;
 }
 
-const Header: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
-    
-    const onImgClick = () => {
-        window.open('https://www.exozet.com/','_blank');
-    }
+const Header=  React.memo<propType>((props) => {
 
     return (
         <header className={`${styles.header} ${props.className}`}>
-            <img onClick={onImgClick} className={`${styles.appBanner}`} src={logo} />
+            <Button className={styles.linkWrapper} link='https://www.exozet.com/'>
+                <Image src={logo} />
+            </Button>
         </header>
     )
 });
-
-Header.defaultProps = {
-    className: "",
-};
 
 export default Header;

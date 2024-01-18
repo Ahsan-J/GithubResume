@@ -2,17 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import detector from "i18next-browser-languagedetector";
 import backend from "i18next-http-backend";
-const packageJSON = require('../../package.json')
-
-// the translations
-// (tip move them in a JSON file and import them)
-const resources = {
-    en: {
-        translation: {
-            "Welcome to React": "Welcome to React and react-i18next"
-        }
-    }
-};
+import packageJSON from '../../package.json';
 
 i18n
     .use(detector)
@@ -32,7 +22,7 @@ i18n
         interpolation: {
             escapeValue: false, // not needed for react!!
             formatSeparator: ',',
-            format: (value, format, lng) => {
+            format: (value, format) => {
                 if (format === 'uppercase') return value.toUpperCase();
                 return value;
             },
