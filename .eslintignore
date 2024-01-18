@@ -1,0 +1,7 @@
+webpack.config.js
+lib
+public
+build
+coverage
+.vscode
+node_modules

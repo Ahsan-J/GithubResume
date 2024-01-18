@@ -1,16 +1,24 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 
+const { parsed } = require('dotenv').config();
+
+/** @type { import('webpack').Configuration } */
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, "build"),
     filename: "bundle.js"
   },
+  mode: process.env.NODE_ENV,
   devtool: "inline-source-map",
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    alias: {
+      '@': path.resolve(process.cwd(), './src'),
+    }
   },
   module: {
     rules: [
@@ -38,9 +46,32 @@ module.exports = {
       },
     ]
   },
+  optimization: {
+    minimize: true
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
+    compress: true,
+    port: parsed.PORT,
+  },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        { 
+          from: 'public', 
+          to: '.',
+          globOptions: {
+            ignore: ["**/index.html"],
+          },
+        }
+      ]
+    }),
     new HtmlWebpackPlugin({ template: "./public/index.html" }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin(envKeys)
+    new webpack.HotModuleReplacementPlugin(),    
+    new webpack.DefinePlugin({
+      "process.env": parsed ? JSON.stringify(parsed): null,
+    })
   ]
 };
