@@ -6,32 +6,28 @@ import { useTranslation } from '../../helper/hooks';
 import moment from 'moment';
 import LanguageBar from '../LanguageBar/LanguageBar';
 import RepositoryDetail from '../RepositoryDetail/RepositoryDetail';
-import { useSearchParams } from 'react-router-dom';
 import { ObjectType } from 'forging-react';
 
 interface propType {
     className?: string;
-    gitUser?: string;
+    username?: string;
 }
 
-const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<propType>) => {
-    const [searchParams] = useSearchParams();
+const Resume=  React.memo<propType>((props) => {
+    const { username } = props;
 
     const [loadUserDetail, { called, loading, data }] = useLazyQuery(
         GET_GIT_USER_DETAIL,
-        { variables: { username: searchParams.get("name") || props.gitUser } }
+        { variables: { username } }
     );
 
     useEffect(() => {
-        const username = searchParams.get("name") || props.gitUser;
-        if (username) {
-            loadUserDetail();
-        }
-    }, [loadUserDetail, props.gitUser, searchParams]);
+        if (username) loadUserDetail();
+    }, [loadUserDetail, username]);
 
     const {t} = useTranslation();
 
-    if (!(searchParams.get("name") || props.gitUser)) {
+    if (!username) {
         return null;
     }
 
@@ -41,6 +37,7 @@ const Resume: React.FC<propType> =  React.memo((props: React.PropsWithChildren<p
             <h3>{t("Generating Resume")}</h3>
         </div>
     )
+
     const { user } = data || {};
 
     if (!user) {

@@ -6,7 +6,7 @@ const theme = {
         info: "#4DECE7",
         warning: "#EC8D17",
         danger: "#9C0932",
-        light: "#FFB7C5",
+        light: "#f5f5f5",
         dark: "#760624",
         link: "#0A86FF",
     },

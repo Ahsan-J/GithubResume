@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import styles from './LoginInput.style.css';
-import { Button, Input } from 'forging-react';
+import { Button, IButtonRef, Input } from 'forging-react';
 import { useTranslation } from '@/helper/hooks';
-import { useSearchParams } from 'react-router-dom';
 
 type propType = {
     id?: string;
@@ -13,23 +12,12 @@ type propType = {
 
 const LoginInput =  React.memo<propType>((props) => {
     const { t } = useTranslation();
-    const [username, setUsername] = useState<string>('');
-    const [, setSearchParams] = useSearchParams();
-
-    const generateGitResume = () => {
-        if(username.length >= 3) {
-            setSearchParams({name: username});
-        }
-    };
-
-    const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
-    };
+    const btnRef = useRef<IButtonRef & HTMLButtonElement>(null);
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && btnRef.current) {
             e.currentTarget.blur();
-            generateGitResume();
+            btnRef.current.click();
         }
     };
 
@@ -40,8 +28,8 @@ const LoginInput =  React.memo<propType>((props) => {
                     {t("Github username")}
                 </h2>
                 <div className={styles.inputContainer}>
-                    <Input className={styles.input} value={username} onChange={onChangeUsername} onKeyDown={onKeyDown} placeholder="John Doe"/>
-                    <Button className={styles.button} onClick={generateGitResume}>{t("Generate")}</Button>
+                    <Input name="username" className={styles.input} onKeyDown={onKeyDown} placeholder="John Doe"/>
+                    <Button ref={btnRef} className={styles.button} htmlType='submit'>{t("Generate")}</Button>
                 </div>
             </div>
         </div>
