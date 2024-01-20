@@ -5,8 +5,6 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const { parsed } = require('dotenv').config();
 
-console.log(parsed, process.env);
-
 /** @type { import('webpack').Configuration } */
 module.exports = {
   entry: './src/index.tsx',
