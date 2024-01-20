@@ -4,6 +4,7 @@ export interface IGitUser {
     name: string;
     bio: string;
     websiteUrl: string;
+    url: string;
     createdAt: string;
     location: string;
     repositories: IGitItemList<IGitRepository>;

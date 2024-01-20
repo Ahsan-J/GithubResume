@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Footer.style.css';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 type propType = {
     id?: string;
@@ -11,8 +11,8 @@ type propType = {
 const Footer =  React.memo<propType>((props) => {
     
     return (
-        <footer className={`${styles.footer} ${props.className}`}>
-            &copy; <a href='https://github.com/Ahsan-J' target='__blank'>Ahsan-J</a> {moment().format("YYYY")}
+        <footer id={props.id} style={props.style} className={`${styles.footer} ${props.className || ""}`}>
+            &copy; <a href='https://github.com/Ahsan-J' target='__blank'>Ahsan-J</a> {format(new Date(), "yyyy")}
         </footer>
     )
 });

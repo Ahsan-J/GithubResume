@@ -68,7 +68,10 @@ module.exports = {
         }
       ]
     }),
-    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+    new HtmlWebpackPlugin({ 
+      template: "./public/index.html", 
+      basePath: parsed?.BASE_PATH || "" 
+    }),
     new webpack.HotModuleReplacementPlugin(),    
     new webpack.DefinePlugin({
       "process.env": parsed ? JSON.stringify(parsed): null,

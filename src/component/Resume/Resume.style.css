@@ -37,6 +37,7 @@
     display: flex;
     flex:1;
     flex-wrap: wrap;
+    gap: 0.2rem;
 }
 
 .languageBar {
@@ -62,34 +63,11 @@
     color: rgb(236, 23, 77);
     text-align: center;
 }
-
 .loaderContainer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.loaderContainer > h3 {
-    font-weight: 300;
-}
-
 .loader {
-    border: 0.35rem solid #f3f3f3; /* Light grey */
-    border-top: 0.35rem solid rgb(236, 23, 77); /* Blue */
-    border-left: 0.35rem solid rgb(236, 23, 77); /* Blue */
-    border-right: 0.35rem solid rgb(236, 23, 77); /* Blue */
-    border-radius: 50%;
-    width: 1.8rem;
-    height: 1.8rem;
-    margin: 1rem;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { 
-        transform: rotate(0deg); 
-    }
-    100% { 
-        transform: rotate(360deg); 
-    }
-  }
+    width: auto !important;   
+}

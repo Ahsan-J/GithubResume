@@ -1,31 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './Resume.style.css';
-import { useLazyQuery } from '@apollo/client';
-import { GET_GIT_USER_DETAIL } from './Resume.gql';
-import { useTranslation } from '../../helper/hooks';
-import moment from 'moment';
+import { format } from 'date-fns';
 import LanguageBar from '../LanguageBar/LanguageBar';
 import RepositoryDetail from '../RepositoryDetail/RepositoryDetail';
-import { ObjectType } from 'forging-react';
+import { IGitUser } from '@/model/git';
+import { useGitUserFetch } from '@/api/useGitUserFetch';
+import { ObjectType, Spinner } from 'forging-react';
 
-interface propType {
+type propType = {
+    id?: string;
+    style?: React.CSSProperties;
     className?: string;
-    username?: string;
+    username?: IGitUser['login'];
 }
 
 const Resume=  React.memo<propType>((props) => {
     const { username } = props;
-
-    const [loadUserDetail, { called, loading, data }] = useLazyQuery(
-        GET_GIT_USER_DETAIL,
-        { variables: { username } }
-    );
-
-    useEffect(() => {
-        if (username) loadUserDetail();
-    }, [loadUserDetail, username]);
-
-    const {t} = useTranslation();
+    
+    const { data, called, loading } = useGitUserFetch(username)
 
     if (!username) {
         return null;
@@ -33,31 +25,32 @@ const Resume=  React.memo<propType>((props) => {
 
     if (!called || called && loading) return (
         <div className={styles.loaderContainer}>
-            <div className={styles.loader}/>
-            <h3>{t("Generating Resume")}</h3>
+            <Spinner size='xs' className={styles.loader} loader />
+            <h3>Generating Resume</h3>
         </div>
-    )
-
-    const { user } = data || {};
-
-    if (!user) {
+    );
+    
+    if (!data || !data?.user) {
         return (
-            <h3 className={styles.noUserFound}>{t("No User Found with the username")}</h3>
+            <h3 className={styles.noUserFound}>No User Found with the username</h3>
         )
     }
 
-    const languages = user.repositories.nodes.reduce<ObjectType>((result, repository) => {
-        if(repository.primaryLanguage) {
-            result[repository.primaryLanguage.id] = {
-                ...(result[repository.primaryLanguage.id] || repository.primaryLanguage),
-                count : (result[repository.primaryLanguage.id]?.count || 0) + 1,
-            };
+    const { user } = data;
+
+    const languagesByCount = user.repositories.nodes.reduce<ObjectType<number>>((result, repository) => {
+        if(!repository.primaryLanguage?.id) return result;
+
+        if(!result[repository.primaryLanguage?.id]) {
+            result[repository.primaryLanguage?.id] = 1;
+        } else {
+            result[repository.primaryLanguage?.id] = result[repository.primaryLanguage?.id] + 1;
         }
         return result;
     }, {});
 
     return (
-        <div className={`${styles.container} ${props.className}`} >
+        <div id={props.id} style={props.style} className={`${styles.container} ${props.className || ""}`} >
             <div className={`${styles.innerWrapper}`}>
                 <div className={`${styles.contentContainer}`}>
                     <h1>{user.login}</h1>
@@ -66,40 +59,37 @@ const Resume=  React.memo<propType>((props) => {
                         <a className={styles.link} href={user.websiteUrl} target="__blank" >{user.websiteUrl}</a>
                     </span>
                     <p style={{fontSize: "1.05rem"}}>
-                        {`${t("On Github since")} ${moment(user.createdAt).format("YYYY")}, 
-                        ${user.name || t("He/She")} ${t("is a developer based in")} ${user.location || t("Wonderland")} 
-                        ${t("with")} `}
-                        <a className={`${styles.link}`} href={user.url}>
-                            {`${user.repositories.totalCount || 0} ${t("public repositories")}`}
-                        </a>
-                        {` ${t("and")} `}
-                        <a className={`${styles.link}`} href={user.url}>
-                            {`${user.followers.totalCount || 0} ${t("followers")}`}
-                        </a>
-                        .
+                        On Github since {format(user.createdAt, "yyyy")}, 
+                        &nbsp;{user.name || "He/She"} is a developer based in {user.location} 
+                        &nbsp;with&nbsp;
+                        <a className={`${styles.link}`} href={user.url}>{user.repositories.totalCount || 0} public repositories</a> 
+                        &nbsp;and&nbsp;
+                        <a className={`${styles.link}`} href={user.url}>{user.followers.totalCount || 0} followers</a>.
                     </p>
                     
-                    {Object.keys(languages).length > 0 ?
+                    {Object.keys(languagesByCount).length > 0 ?
                         <React.Fragment>
-                            <h2 className={styles.heading}>{t("Languages")}</h2>
+                            <h2 className={styles.heading}>Languages</h2>
                             <div className={styles.languageBarContainer}>
-                                {Object.keys(languages).map((key: string) => {
-                                    const value= languages[key];
+                                {Object.keys(languagesByCount).map((languageId: string) => {
+                                    const count = languagesByCount[languageId];
+                                    const value = user.repositories.nodes.find(repo => repo.primaryLanguage?.id == languageId);
+                                    if(!value) return null;
+                                    const ratio = count / user.repositories.totalCount
                                     return (
-                                        <LanguageBar key={key} className={styles.languageBar} totalCount={user.repositories.totalCount} language={value}/>
+                                        <LanguageBar key={languageId} className={styles.languageBar} ratio={ratio} language={value.primaryLanguage}/>
                                     )
                                 })}
                             </div>
                         </React.Fragment>
                     : null}
 
-                    {Object.keys(user.pinnedItems.nodes).length > 0 ? 
+                    {user.pinnedItems.nodes.length > 0 ? 
                         <React.Fragment>
-                            <h2 className={styles.heading} style={{marginBottom: "0.5rem"}}>{t("Popular repositories")}</h2>
+                            <h2 className={styles.heading} style={{marginBottom: "0.5rem"}}>Popular repositories</h2>
                             <div>
-                                {Object.keys(user.pinnedItems.nodes).map((key: string) => {
-                                    const value = user.pinnedItems.nodes[key];
-                                    return <RepositoryDetail key={key} repository={value}/>;
+                                {user.pinnedItems.nodes.map((item) => {
+                                    return <RepositoryDetail key={item.name} repository={item}/>;
                                 })}
                             </div>
                         </React.Fragment>

@@ -3,23 +3,10 @@
 }
 .language {
     color: rgb(236, 23, 77);
+    margin: 0;
 }
 
 .subText {
-    color: rgb(147, 147, 147)
-}
-
-.progressBar {
-    background-color:rgb(220, 220, 220);
-    border-radius: 0.5rem;
-    height: 0.7rem;
-    width: 9rem;
-    position: relative;
-}
-
-.progressBar> div {
-    height: 0.7rem;
-    top: 0;
-    left:0;
-    border-radius: 0.5rem;
+    color: rgb(147, 147, 147);
+    margin: 0;
 }

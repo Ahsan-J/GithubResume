@@ -3,9 +3,9 @@ import { ApolloProvider } from '@apollo/client';
 import client from './core-features/apollo';
 import styles from './App.style.css';
 import { RouterProvider } from 'react-router-dom';
-import AppRouter from '../src/configuration/routes';
+import AppRouter from '@/configuration/routes';
 
-const App = React.memo(() => {
+function App() {
     return (
         <ApolloProvider client={client}>
             <div className={styles.container}>
@@ -13,6 +13,6 @@ const App = React.memo(() => {
             </div>
         </ApolloProvider>
     )
-});
+}
 
 export default App;

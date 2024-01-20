@@ -1,6 +1,9 @@
-import { gql } from '@apollo/client';
+import { useGitContext } from "@/context/git/useGitContext";
+import { IGitUser } from "@/model/git";
+import { useLazyQuery, gql } from "@apollo/client";
+import { useEffect } from "react";
 
-export const GET_GIT_USER_DETAIL = gql`
+const query = gql`
   query GetGitUser ($username: String!) {
     user(login: $username) {
       login
@@ -11,7 +14,7 @@ export const GET_GIT_USER_DETAIL = gql`
       url
       createdAt
       location
-      repositories (last: 50) {
+      repositories (last: 100) {
         totalCount
         nodes {
           primaryLanguage {
@@ -50,4 +53,23 @@ export const GET_GIT_USER_DETAIL = gql`
       }
     }
   }
-`;
+`
+
+export const useGitUserFetch = (username?: string) => {
+    const [state, dispatch] = useGitContext();
+
+    const [loadUserDetail, responseState ] = useLazyQuery<{user: IGitUser}>(query, { variables: { username } });
+    
+    useEffect(() => {
+        if (username && state.user?.login != username) {
+            loadUserDetail();
+        }
+    }, [loadUserDetail, state.user?.login, username]);
+
+    
+    useEffect(() => {
+        dispatch({ user: responseState.data?.user || null });
+    }, [dispatch, responseState.data])
+
+    return responseState;
+}

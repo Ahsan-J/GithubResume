@@ -4,7 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { ThemeProvider } from 'forging-react';
 import theme from './configuration/theme';
-import './core-features/i18n';
+import { GitContextProvider } from './context/git';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ThemeProvider config={theme}>
-            <App />
+            <GitContextProvider>
+                <App />
+            </GitContextProvider>
         </ThemeProvider>
     </React.StrictMode>
 );
