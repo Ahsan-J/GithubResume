@@ -7,8 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      BASE_PATH: ${{ secrets.BASE_PATH }}
-      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      BASE_PATH: ${{ vars.BASE_PATH }}
+      GIT_TOKEN: ${{ vars.GIT_TOKEN }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
