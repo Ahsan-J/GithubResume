@@ -72,7 +72,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({ 
       template: "./public/index.html", 
-      basePath: parsed?.BASE_PATH || "" 
+      basePath: parsed?.BASE_PATH || process.env.BASE_PATH || "",
     }),
     new webpack.HotModuleReplacementPlugin(),    
     new webpack.DefinePlugin({
