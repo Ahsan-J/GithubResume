@@ -76,8 +76,8 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),    
     new webpack.DefinePlugin({
-      "process.env.GIT_TOKEN": process.env.GIT_TOKEN,
-      "process.env.BASE_PATH": process.env.BASE_PATH
+      "process.env.GIT_TOKEN": JSON.stringify(parsed?.GIT_TOKEN || process.env.GIT_TOKEN),
+      "process.env.BASE_PATH": JSON.stringify(parsed?.BASE_PATH || process.env.BASE_PATH)
     })
   ]
 };
