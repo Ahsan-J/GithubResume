@@ -16,8 +16,8 @@ const AppRouter = createBrowserRouter(routeConfig.map<RouteObject>(route => {
             <React.Suspense fallback={<></>}>
                 <Component />
             </React.Suspense>
-        )
+        ),
     }
-}));
+}), { basename: process.env.BASE_PATH });
 
 export default AppRouter;
