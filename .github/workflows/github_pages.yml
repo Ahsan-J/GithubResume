@@ -6,6 +6,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      BASE_PATH: ${{ secrets.BASE_PATH }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -17,9 +20,6 @@ jobs:
 
       - name: Clean cache
         run: npm cache clean --force
-        env:
-          BASE_PATH: ${{ secrets.BASE_PATH }}
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
 
       - name: Installing dependencies
         run: npm install
