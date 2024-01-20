@@ -54,7 +54,7 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: parsed.PORT,
+    port: process.env.PORT,
   },
   plugins: [
     new CopyPlugin({
@@ -74,7 +74,8 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),    
     new webpack.DefinePlugin({
-      "process.env": parsed ? JSON.stringify(parsed): null,
+      "process.env.GIT_TOKEN": process.env.GIT_TOKEN,
+      "process.env.BASE_PATH": process.env.BASE_PATH
     })
   ]
 };
