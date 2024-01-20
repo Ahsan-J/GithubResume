@@ -27,6 +27,7 @@ jobs:
       - name: Build 🔧 # This example project is built using npm and outputs the result to the 'dist' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: npm run build -- -o ./dist
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # The folder the action should deploy.
