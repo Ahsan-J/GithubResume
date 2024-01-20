@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { GitContextInitialState, IGitContext } from "./gitContextState";
+import { GitContextInitialState, IGitContext } from "./GitContextState";
 import {useGitContextReducer} from "./useGitContextReducer";
 import { GitContext } from "./useGitContext";
 
